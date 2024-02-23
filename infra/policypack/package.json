@@ -1,0 +1,13 @@
+{
+    "name": "aws-typescript",
+    "version": "0.0.2",
+    "dependencies": {
+        "@pulumi/aws": "^6.23.0",
+        "@pulumi/compliance-policy-manager": "^0.1.2",
+        "@pulumi/policy": "^1.10.0",
+        "@pulumi/pulumi": "^3.107.0"
+    },
+    "devDependencies": {
+        "@types/node": "^10.17.60"
+    }
+}
