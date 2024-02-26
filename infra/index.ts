@@ -2,7 +2,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as random from "@pulumi/random";
 
-const name = "diana"
+const name = "de"
 
 // Create a KMS Customer Master Key (CMK)
 // const kmsKey = new aws.kms.Key("pulumi-stackvalidation-example-" + name, {
@@ -92,20 +92,6 @@ const sourceBucket = new aws.s3.Bucket("pulumi-stackvalidation-example-" + name,
 
 });
 
-// Create a bucket policy to allow read access
-const bucketPolicy = new aws.s3.BucketPolicy("my-bucket-policy", {
-    bucket: sourceBucket.id, // reference to the bucket created earlier
-    policy: sourceBucket.id.apply(id => JSON.stringify({
-        Version: "2012-10-17",
-        Statement: [{
-            Effect: "Allow",
-            Principal: "*",
-            Action: ["s3:GetObject"],
-            Resource: [`arn:aws:s3:::${id}/*`]
-        }]
-    })),
-});
-
 const ownershipControls = new aws.s3.BucketOwnershipControls("ownership-controls", {
     bucket: sourceBucket.id,
     rule: {
@@ -125,17 +111,15 @@ const indexHtml = new aws.s3.BucketObject("index.html", {
     bucket: sourceBucket,
     source: new pulumi.asset.FileAsset("../app/index.html"),
     contentType: "text/html",
-    acl: "public-read",
-}, { dependsOn: [publicAccessBlock, ownershipControls] });
+});
 
 // Upload script.js to the S3 bucket
 const scriptJs = new aws.s3.BucketObject("script.js", {
     bucket: sourceBucket,
     source: new pulumi.asset.FileAsset("../app/script.js"),
     contentType: "text/javascript",
-    acl: "public-read",
 
-}, { dependsOn: [publicAccessBlock, ownershipControls] });
+});
 
 export const testUrl = sourceBucket.websiteEndpoint;
 
