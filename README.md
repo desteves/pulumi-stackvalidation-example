@@ -1,6 +1,6 @@
 # Pulimi Policy as Code Stack Validation Example
 
-
+[StackValidation code](https://github.com/desteves/pulumi-stackvalidation-example/blob/main/infra/policypack/index.ts#L17) 
 
 
 ## When in violation of the Stack Policy
